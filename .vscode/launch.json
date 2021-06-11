@@ -1,0 +1,46 @@
+{"configurations": [
+	{
+		"name": "Primary Debug",
+		"request": "launch",
+		"type": "dart",
+		"program": "one_app_stack/lib/main.dart",
+		"flutterMode": "debug",
+	},
+	{
+		"name": "Primary Release",
+		"request": "launch",
+		"type": "dart",
+		"program": "one_app_stack/lib/main.dart",
+		"flutterMode": "release",
+	},
+	{
+		"name": "web canvaskit debug",
+		"request": "launch",
+		"type": "dart",
+		"flutterMode": "debug",
+		"args": ["--web-renderer canvaskit"],
+		"program": "one_app_stack/lib/main_web.dart",
+  },
+  {
+		"name": "web canvaskit release",
+		"request": "launch",
+		"type": "dart",
+		"flutterMode": "release",
+		"args": ["--web-renderer canvaskit"],
+		"program": "one_app_stack/lib/main_web.dart",
+  },
+	{
+		"name": "web html debug",
+		"request": "launch",
+		"type": "dart",
+		"flutterMode": "debug",
+		"program": "one_app_stack/lib/main_web.dart",
+  },
+  {
+		"name": "web html release",
+		"request": "launch",
+		"type": "dart",
+		"flutterMode": "release",
+		"program": "one_app_stack/lib/main_web.dart",
+  },
+]}

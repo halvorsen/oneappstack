@@ -1,0 +1,11 @@
+{
+    "folders": [
+        {
+            "name": "1AppStack",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "editor.tabSize": 2,
+    }
+}

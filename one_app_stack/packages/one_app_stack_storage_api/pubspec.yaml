@@ -1,0 +1,14 @@
+name: one_app_stack_storage_api
+version: 1.0.0
+publish_to: none
+description: >-
+  SDK for 1AppStack storage.
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_sign_in: ^5.0.3
+  uuid: ^3.0.4

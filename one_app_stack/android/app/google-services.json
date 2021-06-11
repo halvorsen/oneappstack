@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "514329578682",
+    "firebase_url": "https://oneappstack-default-rtdb.firebaseio.com",
+    "project_id": "oneappstack",
+    "storage_bucket": "oneappstack.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514329578682:android:5fef0e67db6bfd3df18683",
+        "android_client_info": {
+          "package_name": "com.oneappstack.oneappstack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514329578682-5g4na7g7vao5s9si9nlm643ejltahe4q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE6tE_JdG1p6b8BMpNB4_fmEbGJ1GkIGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "514329578682-5g4na7g7vao5s9si9nlm643ejltahe4q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "514329578682-3spfjivah9g9qbcd4f1lkg36rqv4hemq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.test.oneappstack"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

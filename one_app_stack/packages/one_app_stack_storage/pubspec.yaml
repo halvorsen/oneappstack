@@ -1,0 +1,22 @@
+name: one_app_stack_storage
+version: 1.0.0
+publish_to: none
+description: >-
+  SDK for 1AppStack storage.
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^1.1.1
+  cloud_firestore: ^2.1.0
+  firebase_auth: ^1.1.4
+  firebase_database: ^6.1.2
+  firebase_storage: ^8.0.6
+  firebase_analytics: ^8.1.0
+  cloud_functions: ^1.1.0
+  uuid: ^3.0.4
+  one_app_stack_storage_api:
+    path: ../one_app_stack_storage_api
