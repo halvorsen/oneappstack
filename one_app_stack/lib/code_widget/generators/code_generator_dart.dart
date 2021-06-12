@@ -30,7 +30,7 @@ class CodeGeneratorDart extends CodeGenerator {
         .toList();
 
     return '''
-class ${upper(documentName)} {
+class ${upper(documentName)}Info {
 
     ${propertyDefinitions.join('\n    ')}
     ${upper(documentName)}(
@@ -65,7 +65,7 @@ class ${upper(documentName)} {
   String repeatedApiCodeSpecific(String documentName, SchemaType type) {
     return '''
     Future<void> save${upper(documentName)}Info(String ${lower(documentName)}Id, ${upper(documentName)}Info ${lower(documentName)}Info);
-    Future<${upper(documentName)}> load${upper(documentName)}Info(String ${lower(documentName)}Id);
+    Future<${upper(documentName)}Info> load${upper(documentName)}Info(String ${lower(documentName)}Id);
     Future<void> delete${upper(documentName)}Info(String ${lower(documentName)}Id);
 
 ''' +
@@ -118,7 +118,7 @@ abstract class AbstractStorage {
     }
 
     @override
-    Future<${upper(documentName)}> load${upper(documentName)}Info($arguments) async {
+    Future<${upper(documentName)}Info> load${upper(documentName)}Info($arguments) async {
         Map<String, dynamic> map;
         final snapshot = await databaseBaseReference.child($path).once();
         map = snapshot.value() ?? {};

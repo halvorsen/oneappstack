@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
 set(BINARY_NAME "one_app_stack")
-set(APPLICATION_ID "com.oneAppStack.oneAppStack")
+set(APPLICATION_ID "com.oneappstack.oneappstack")
 
 cmake_policy(SET CMP0063 NEW)
 

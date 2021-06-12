@@ -1,4 +1,4 @@
-package com.oneAppStack.oneAppStack
+package com.oneappstack.oneappstack
 
 import io.flutter.embedding.android.FlutterActivity
 
