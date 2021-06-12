@@ -126,6 +126,9 @@ class ManagerBloc extends Bloc<ManagerEvent, ImmutableManagerState> {
         await Future.delayed(Duration(milliseconds: 100));
         yield ImmutableManagerState.from(managerState);
       }
+    } else if (event is ReplaceLastPathElement) {
+      _logic.replaceLastPath(event.navigationElement);
+      yield ImmutableManagerState.from(managerState);
     } else {
       addError(Exception('unsupported schema event'));
     }
@@ -156,6 +159,11 @@ class DeleteDocument extends ManagerEvent {
 class SelectPathElement extends ManagerEvent {
   SelectPathElement(this.navigationElement);
   final NavigationElement? navigationElement;
+}
+
+class ReplaceLastPathElement extends ManagerEvent {
+  ReplaceLastPathElement(this.navigationElement);
+  final NavigationElement navigationElement;
 }
 
 class SaveValidDocumentValuesEvent extends ManagerEvent {

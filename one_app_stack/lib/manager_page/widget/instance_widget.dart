@@ -27,8 +27,11 @@ class InstanceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final filteredItems = items
+        .where((element) => (!element.contains('{') && element != 'null'))
+        .toList();
     List<Widget> children = [];
-    for (var i = 0; i < items.length; i++) {
+    for (var i = 0; i < filteredItems.length; i++) {
       children.add(Container(
         width: 30,
       ));
@@ -37,7 +40,8 @@ class InstanceWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-            Text(items[i], style: Theme.of(context).textTheme.headline3),
+            Text(filteredItems[i],
+                style: Theme.of(context).textTheme.headline3),
           ])));
     }
     return Padding(

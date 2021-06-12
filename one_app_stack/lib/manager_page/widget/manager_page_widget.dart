@@ -140,8 +140,14 @@ class _ManagerPageWidgetState extends State<ManagerPageWidget> {
                             }
                           } else {
                             for (var doc in docs) {
-                              final documentInstance =
+                              var documentInstance =
                                   Map<String, dynamic>.from(doc);
+                              documentInstance.removeWhere((key, value) {
+                                return (key == docLastEditedId ||
+                                    key == docCreationId);
+                              });
+                              // print(documentInstance);
+                              print(documentDefinition?.toJsonString());
                               instanceSummaries?.add(InstanceSummary(
                                   documentInstance[docId],
                                   DocumentProperty.assembleDocument(

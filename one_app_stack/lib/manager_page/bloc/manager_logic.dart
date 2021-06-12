@@ -24,6 +24,11 @@ class ManagerLogic {
     }
   }
 
+  replaceLastPath(NavigationElement newNavigationElement) {
+    managerState.path.removeLast();
+    managerState.path.add(newNavigationElement);
+  }
+
   ///selected a path element that affects the location state of what the user is currently trying to examine
   ///returns true if should get documents for current path
   Future<bool> selectPathElement(NavigationElement navigationElement) async {

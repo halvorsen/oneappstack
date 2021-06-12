@@ -41,6 +41,11 @@ class ManagerPageController
     bloc.add(SaveValidDocumentValuesEvent(values, filesToSave, filesToDelete));
   }
 
+  @override
+  void replaceLastPathElement(NavigationElement navigationElement) {
+    bloc.add(ReplaceLastPathElement(navigationElement));
+  }
+
   void addDocument() {
     bloc.add(AddDocumentEvent());
   }
