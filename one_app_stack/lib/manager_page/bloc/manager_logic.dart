@@ -120,6 +120,7 @@ class ManagerLogic {
         managerState.allSchemas.firstWhere((element) => element.id == schemaId);
     final documentDefinition = managerState.documentDefinitions
         .firstWhere((element) => element.id == schema.linkedDocument);
+    managerState.selectedDocumentNew = false;
     managerState.selectedDocument = DocumentProperty.assembleDocument(
         document, documentDefinition, managerState.allSchemas, false);
     managerState.isFetchingNeededDataToContinue = false;
@@ -131,6 +132,7 @@ class ManagerLogic {
     assert(schema.linkedDocument != null);
     final linkedDocumentDefinition = managerState.documentDefinitions
         .firstWhere((element) => element.id == schema.linkedDocument);
+    managerState.selectedDocumentNew = true;
     managerState.selectedDocument = DocumentProperty.assembleDocument(
         {}, linkedDocumentDefinition, managerState.allSchemas, true);
     final id = managerState.selectedDocument!

@@ -258,7 +258,7 @@ class _ManagerPageWidgetState extends State<ManagerPageWidget> {
                                         .getAppFileUri(
                                             state.getStoragePath(), filename);
                                   }, widget.pageController, isFileStorage,
-                                    widget.services),
+                                    widget.services, state.selectdDocumentNew),
                             (showActivityIndicator)
                                 ? IgnorePointer(
                                     child: Container(

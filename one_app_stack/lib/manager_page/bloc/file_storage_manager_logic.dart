@@ -22,6 +22,7 @@ class FileStorageManagerLogic extends ManagerLogic {
     if (!navigationElement.isNavigationBarElement &&
         !navigationElement.isDocuments) {
       // document is selected, not from navigation bar
+      managerState.selectedDocumentNew = false;
       managerState.selectedDocument = [
         DocumentProperty('', 'Files', PropertyType.DocumentFileList, [])
       ];
@@ -61,6 +62,7 @@ class FileStorageManagerLogic extends ManagerLogic {
 
   @override
   void showDocument(NavigationElement navigationElement) {
+    managerState.selectedDocumentNew = false;
     managerState.selectedDocument = [
       DocumentProperty('', 'Files', PropertyType.DocumentFileList,
           [filename(navigationElement.id)])
@@ -69,6 +71,7 @@ class FileStorageManagerLogic extends ManagerLogic {
 
   @override
   void addDocument() {
+    managerState.selectedDocumentNew = true;
     managerState.selectedDocument = [
       DocumentProperty('', 'Files', PropertyType.DocumentFileList, [])
     ];

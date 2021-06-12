@@ -84,28 +84,27 @@ class SchemaWidget extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 5),
                 child: isEditing
                     ? Container(
-                        height: 40,
                         child: TextButton(
-                          style: TextButton.styleFrom(
-                              textStyle: TextStyle(
-                                  fontSize: varyForScreenWidth(
-                                      25, 25, 22, 22, context),
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.blue)),
-                          child: Text(
+                        style: TextButton.styleFrom(
+                            textStyle: TextStyle(
+                                fontSize:
+                                    varyForScreenWidth(25, 25, 22, 22, context),
+                                fontWeight: FontWeight.w400,
+                                color: Colors.blue)),
+                        child: Text(
+                          name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        onPressed: () => delegate.showEditor(
+                            type,
+                            schemaId,
+                            -2,
                             name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          onPressed: () => delegate.showEditor(
-                              type,
-                              schemaId,
-                              -2,
-                              name,
-                              'Edit Path Name',
-                              invalidNameStrings,
-                              parentContext),
-                        ))
+                            'Edit Path Name',
+                            invalidNameStrings,
+                            parentContext),
+                      ))
                     : Text(name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

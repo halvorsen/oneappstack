@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:one_app_stack_storage/one_app_stack_storage.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:one_app_stack_storage_api/one_app_stack_storage_api.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'app_navigation.dart';
 import 'main_common.dart';
@@ -66,29 +65,22 @@ class OneAppStackPlatform extends OneAppStackPlatformApi {
 
 class FileHelper extends FileHelperApi {
   Future<Map<String, Uint8List>> chooseFile(BuildContext context) async {
-    if (Platform.isIOS || Platform.isAndroid) {
-      final result = await FilePicker.platform.pickFiles();
-      if (result != null) {
-        return {result.files.single.name: result.files.single.bytes};
-      } else {
-        return {};
-      }
-    } else {
-      final directory = await getExternalStorageDirectory();
-      String path = await FilesystemPicker.open(
-        title: 'Select File',
-        context: context,
-        rootDirectory: directory,
-        fsType: FilesystemType.file,
-      );
+    final directory = Platform.isAndroid
+        ? await getExternalStorageDirectory()
+        : await getApplicationDocumentsDirectory();
+    String path = await FilesystemPicker.open(
+      title: 'Select File',
+      context: context,
+      rootDirectory: directory,
+      fsType: FilesystemType.file,
+    );
+    if (path != null) {
       final filename = path.split('/').last;
-      if (path != null) {
-        File file = File('$path');
-        final data = await file.readAsBytes();
-        return {filename: data};
-      } else {
-        return {};
-      }
+      File file = File('$path');
+      final data = await file.readAsBytes();
+      return {filename: data};
+    } else {
+      return {};
     }
   }
 }

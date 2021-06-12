@@ -190,6 +190,7 @@ class ManagerState {
   ///Holds state information for the current document getting added, removed, edited.
   DocumentInfo? currentDefinition;
   List<DocumentProperty>? selectedDocument;
+  bool selectedDocumentNew = false;
 
   ///Userd by all the schemas [documents] has the state information for collections at given storage locations
   Map<String, dynamic>? documents;
@@ -327,6 +328,7 @@ class ImmutableManagerState extends Equatable {
         documentDefinitions = managerState.documentDefinitions,
         path = managerState.path,
         documents = managerState.documents,
+        selectdDocumentNew = managerState.selectedDocumentNew,
         selectedDocument = managerState.selectedDocument,
         currentDefinition = managerState.currentDefinition,
         isFetchingNeededDataToContinue =
@@ -358,6 +360,7 @@ class ImmutableManagerState extends Equatable {
   final DocumentInfo? currentDefinition;
   final Map<String, dynamic>? documents;
   final List<DocumentProperty>? selectedDocument;
+  final bool selectdDocumentNew;
 
   final bool isFetchingNeededDataToContinue;
   final List<String> userEntries;

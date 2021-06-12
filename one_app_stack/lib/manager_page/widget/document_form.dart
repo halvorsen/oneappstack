@@ -34,6 +34,7 @@ class DocumentForm extends StatefulWidget {
   final DocumentFormDelegate delegate;
   final Future<Uri> Function(String filename) getFileUri;
   final bool isFileStorageDocument;
+  final bool canChangeName;
   final CommonServices services;
   DocumentForm(
       this.documentId,
@@ -42,7 +43,8 @@ class DocumentForm extends StatefulWidget {
       this.getFileUri,
       this.delegate,
       this.isFileStorageDocument,
-      this.services);
+      this.services,
+      this.canChangeName);
   @override
   _DocumentFormState createState() {
     return _DocumentFormState();
@@ -57,11 +59,13 @@ class _DocumentFormState extends State<DocumentForm> {
   final fileUris = <String, Uri?>{};
   var pendingSaveFilenames = <String>[];
   var pendingDeleteFilenames = <String>[];
+  var canChangeName = true;
   @override
   void initState() {
     documentName = widget.name;
     mutableSelectedDocument =
         List<DocumentProperty>.from(widget.selectedDocument);
+    canChangeName = widget.canChangeName;
     super.initState();
   }
 
@@ -572,6 +576,7 @@ class _DocumentFormState extends State<DocumentForm> {
                                       if (!didDocumentChange) {
                                         return;
                                       }
+                                      canChangeName = false;
                                       didDocumentChange = false;
                                       setState(() {});
                                       if (_formKey.currentState!.validate()) {
@@ -617,14 +622,17 @@ class _DocumentFormState extends State<DocumentForm> {
                                     initialData: widget.name,
                                     builder: (BuildContext context,
                                         AsyncSnapshot<String> snapshot) {
-                                      return TransparentButton(
-                                        snapshot.data ?? 'Error',
-                                        showNameEditor,
-                                        fontSize: varyForScreenWidth(
-                                            22, 22, 14, 14, context),
-                                        insets:
-                                            EdgeInsets.symmetric(horizontal: 5),
-                                      );
+                                      return (!canChangeName)
+                                          ? Text(snapshot.data ?? 'Error',
+                                              style: textStyle(context))
+                                          : TransparentButton(
+                                              snapshot.data ?? 'Error',
+                                              showNameEditor,
+                                              fontSize: varyForScreenWidth(
+                                                  22, 22, 14, 14, context),
+                                              insets: EdgeInsets.symmetric(
+                                                  horizontal: 5),
+                                            );
                                     }),
                               ]),
                             ],
@@ -662,8 +670,7 @@ class _DocumentFormState extends State<DocumentForm> {
   var documentName = '';
   void showNameEditor() {
     TextFieldPopoverWidget.showTextFieldPopoverWidget(
-        context, 'Change Document Name', documentName, null, [''],
-        (validChange) {
+        context, 'Change Name', documentName, null, [''], (validChange) {
       recordValue(docName, validChange, -1);
       documentName = validChange;
       nameStreamController.sink.add(validChange);

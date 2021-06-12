@@ -73,8 +73,9 @@ class FirebaseSignin extends FirebaseSigninApi {
           : false;
       try {
         if (!isSignedIn) {
-          return await _signInWithGoogle(context,
+          final success = await _signInWithGoogle(context,
               appName: appName, email: email, password: password);
+          return success;
         }
       } catch (error) {
         print(error);
