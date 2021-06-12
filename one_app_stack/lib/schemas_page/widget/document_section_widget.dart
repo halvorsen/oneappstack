@@ -115,15 +115,13 @@ class _DocumentSectionWidgetState extends State<DocumentSectionWidget> {
                   .onReorder(SchemaType.document, oldIndex, newIndex);
             },
             children: documents?.map((e) {
-                  var schemaList =
-                      state.allSchemas.map((f) => f.namePrimary!).toList();
                   return DocumentDefinitionWidget(
                       e.id!,
                       e.namePrimary ?? '',
                       e.properties ?? [],
                       widget.delegate.isEditingSection(SchemaType.document),
                       widget.documentDelegate,
-                      schemaList,
+                      state.allSchemas,
                       context,
                       key: ValueKey(e.id));
                 }).toList() ??

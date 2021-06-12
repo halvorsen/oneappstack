@@ -27,12 +27,12 @@ class DocumentDefinitionWidget extends StatelessWidget {
   final List<DocumentProperty> properties;
   final bool isEditing;
   final DocumentDefinitionDelegate delegate;
-  final List<String> allSchemaNames;
+  final List<SchemaInfo> allSchemaInfos;
   final propertyFieldHeight = 60.0;
   final BuildContext parentContext;
 
   DocumentDefinitionWidget(this.id, this.documentName, this.properties,
-      this.isEditing, this.delegate, this.allSchemaNames, this.parentContext,
+      this.isEditing, this.delegate, this.allSchemaInfos, this.parentContext,
       {Key? key})
       : super(key: key);
 
@@ -94,11 +94,16 @@ class DocumentDefinitionWidget extends StatelessWidget {
                                               property.value))))))
                   : Text(PropertyTypeHelper.string(property.type),
                       style: style))));
+      final propertyValueName = (property.value != null)
+          ? allSchemaInfos
+              .firstWhere((element) => element.id == property.value)
+              .namePrimary!
+          : null;
       column3.add((property.type == PropertyType.Branch)
           ? Container(
               height: propertyFieldHeight,
               child: Center(
-                  child: isEditing
+                  child: (isEditing && allSchemaInfos.isNotEmpty)
                       ? SmallDecoratedContainer(
                           child: Padding(
                               padding: EdgeInsets.only(left: 20),
@@ -106,8 +111,11 @@ class DocumentDefinitionWidget extends StatelessWidget {
                                   child: DropdownButton(
                                       hint: Text('link schema',
                                           style: TextStyle(color: Colors.blue)),
-                                      value: property.value,
-                                      items: (['none'] + allSchemaNames)
+                                      value: propertyValueName,
+                                      items: (['none'] +
+                                              allSchemaInfos
+                                                  .map((e) => e.namePrimary!)
+                                                  .toList())
                                           .map((String value) {
                                         return new DropdownMenuItem<String>(
                                           value: value,
@@ -122,8 +130,14 @@ class DocumentDefinitionWidget extends StatelessWidget {
                                                   property.id,
                                                   property.name,
                                                   property.type,
-                                                  value))))))
-                      : Text(property.value ?? 'none', style: style)))
+                                                  allSchemaInfos
+                                                      .firstWhere((element) =>
+                                                          element.namePrimary ==
+                                                          value)
+                                                      .id))))))
+                      : allSchemaInfos.isNotEmpty
+                          ? Text(propertyValueName ?? 'none', style: style)
+                          : Text('none')))
           : Container(
               height: propertyFieldHeight,
             ));
@@ -160,8 +174,10 @@ class DocumentDefinitionWidget extends StatelessWidget {
                         Container(height: 10),
                         isEditing
                             ? TransparentButton(documentName, () {
-                                var invalidNameStrings =
-                                    List<String>.from(allSchemaNames);
+                                var invalidNameStrings = List<String>.from(
+                                    allSchemaInfos
+                                        .map((e) => e.namePrimary!)
+                                        .toList());
                                 invalidNameStrings.remove(documentName);
                                 delegate.showDocumentPropertyNameEditor(
                                     id,

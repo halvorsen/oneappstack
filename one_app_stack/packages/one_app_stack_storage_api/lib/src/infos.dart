@@ -308,11 +308,11 @@ class DocumentProperty {
       final newProperties = <DocumentProperty>[];
       for (var property in properties) {
         if (property.type == PropertyType.Branch) {
-          final schemaId = projectSchemas
-              .firstWhere((element) => element.namePrimary == property.value)
-              .id;
+          final schemaName = projectSchemas
+              .firstWhere((element) => element.id == property.value)
+              .namePrimary;
           newProperties.add(DocumentProperty(property.id, property.name,
-              property.type, {'name': property.value, 'id': schemaId}));
+              property.type, {'name': schemaName, 'id': property.value}));
         } else if (property.id != docLastEditedId) {
           newProperties.add(DocumentProperty(
               property.id, property.name, property.type, map[property.name]));

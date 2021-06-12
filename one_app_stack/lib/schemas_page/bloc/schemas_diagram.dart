@@ -128,9 +128,8 @@ class SchemasDiagram {
         final documentProperties = documentInfo.properties ?? [];
         for (var property in documentProperties) {
           if (property.type == PropertyType.Branch) {
-            String pathName = property.value;
             final schema = _state.allSchemas
-                .firstWhere((element) => element.namePrimary == pathName);
+                .firstWhere((element) => element.id == property.value);
             final docId = schema.linkedDocument;
             final doc = (docId == null)
                 ? null

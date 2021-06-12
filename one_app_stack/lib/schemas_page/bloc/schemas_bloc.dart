@@ -152,6 +152,18 @@ class SchemasBloc extends Bloc<SchemasEvent, ImmutableSchemasState> {
   Future<void> _schemaDelete(SchemaDeleteEvent delete) async {
     await services.storage
         .removeSchema(delete.type, currentProjectId ?? '', delete.id);
+    for (var documentDef in schemasState.documentDefinitions) {
+      if (documentDef.properties != null) {
+        for (var property in documentDef.properties!) {
+          if (property.type == PropertyType.Branch &&
+              property.value == delete.id) {
+            property.value = null;
+            services.storage.saveDocumentDefinition(
+                currentProjectId ?? '', documentDef.id!, documentDef);
+          }
+        }
+      }
+    }
     this.add(YieldStateEvent());
   }
 
