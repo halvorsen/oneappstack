@@ -53,13 +53,15 @@ class FirebaseSignin extends FirebaseSigninApi {
   }
 
   @override
-  Future<void> signIn(BuildContext context, {String? appName}) async {
+  Future<bool> signIn(BuildContext context,
+      {String? appName, String? email, String? password}) async {
     var currentUser = currentUserEmail();
     if (currentUser == null && appName == null) {
       try {
-        await _signInWithGoogle(context);
+        return await _signInWithGoogle(context);
       } catch (error) {
         print(error);
+        return false;
       }
     } else if (appName != null) {
       FirebaseApp? app;
@@ -71,16 +73,30 @@ class FirebaseSignin extends FirebaseSigninApi {
           : false;
       try {
         if (!isSignedIn) {
-          await _signInWithGoogle(context, appName: appName);
+          return await _signInWithGoogle(context,
+              appName: appName, email: email, password: password);
         }
       } catch (error) {
         print(error);
+        return false;
       }
+    }
+    return false;
+  }
+
+  @override
+  bool isSignedIn(String appName) {
+    try {
+      final otherApp =
+          Firebase.apps.firstWhere((element) => element.name == appName);
+      return FirebaseAuth.instanceFor(app: otherApp).currentUser != null;
+    } catch (error) {
+      return false;
     }
   }
 
-  Future<void> _signInWithGoogle(BuildContext context,
-      {String? appName}) async {
+  Future<bool> _signInWithGoogle(BuildContext context,
+      {String? appName, String? email, String? password}) async {
     try {
       final otherApp = (appName != null)
           ? Firebase.apps.firstWhere((element) => element.name == appName)
@@ -88,8 +104,13 @@ class FirebaseSignin extends FirebaseSigninApi {
       if (otherApp != null) {
         if (FirebaseAuth.instanceFor(app: otherApp).currentUser == null) {
           // this seems to be the only way to do this with current google sign in sdk
-          FirebaseAuth.instanceFor(app: otherApp)
-              .signInWithEmailAndPassword(email: '', password: '');
+          try {
+            await FirebaseAuth.instanceFor(app: otherApp)
+                .signInWithEmailAndPassword(email: email!, password: password!);
+            return true;
+          } catch (error) {
+            return false;
+          }
         }
       } else {
         if (FirebaseAuth.instance.currentUser == null) {
@@ -103,6 +124,7 @@ class FirebaseSignin extends FirebaseSigninApi {
             );
             try {
               await FirebaseAuth.instance.signInWithCredential(credential);
+              return true;
             } on FirebaseAuthException catch (error) {
               if (error.code == 'account-exists-with-different-credential') {
                 snackBar(
@@ -128,6 +150,7 @@ class FirebaseSignin extends FirebaseSigninApi {
     } catch (error) {
       print(error);
     }
+    return false;
   }
 
   @override

@@ -11,7 +11,9 @@ abstract class FirebaseSigninApi {
   String? currentUserEmail();
   String? currentUserUid();
 
-  Future<void> signIn(BuildContext context, {String? appName});
+  Future<bool> signIn(BuildContext context,
+      {String? appName, String? email, String? password});
+  bool isSignedIn(String appName);
 
   Future<void> signOut(BuildContext context);
 }

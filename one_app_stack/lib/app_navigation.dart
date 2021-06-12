@@ -41,8 +41,8 @@ class AppNavigation implements AppNavigationApi {
 
   CommonServices services;
   AppPage first = AppPage.Landing;
-  AppPage? current = AppPage.Landing;
-  AppPage? previous;
+  AppPage? _current = AppPage.Landing;
+  AppPage? _previous;
 
   MaterialApp materialApp() {
     return MaterialApp(
@@ -149,63 +149,68 @@ class AppNavigation implements AppNavigationApi {
   }
 
   void _setPopScreenValues() {
-    final next = previous;
-    previous = current;
-    current = next;
+    final next = _previous;
+    _previous = _current;
+    _current = next;
+  }
+
+  void pop(BuildContext context) {
+    _setPopScreenValues();
+    Navigator.pop(context);
   }
 
   @override
   Future<void> navigateToProjectsPage(BuildContext context) async {
-    if (current == AppPage.Projects) {
+    if (_current == AppPage.Projects) {
       return null;
     }
-    previous = current;
-    current = AppPage.Projects;
+    _previous = _current;
+    _current = AppPage.Projects;
     await Navigator.pushNamed(
         context, AppNavigation.routeName[AppPage.Projects]!);
   }
 
   @override
   Future<void> navigateToSchemasPage(BuildContext context) async {
-    if (current == AppPage.Schemas) {
+    if (_current == AppPage.Schemas) {
       return null;
     }
-    previous = current;
-    current = AppPage.Schemas;
+    _previous = _current;
+    _current = AppPage.Schemas;
     await Navigator.pushNamed(
         context, AppNavigation.routeName[AppPage.Schemas]!);
   }
 
   @override
   Future<void> navigateToManagerPage(BuildContext context) async {
-    if (current == AppPage.Manager) {
+    if (_current == AppPage.Manager) {
       return null;
     }
-    previous = current;
-    current = AppPage.Manager;
+    _previous = _current;
+    _current = AppPage.Manager;
     await Navigator.pushNamed(
         context, AppNavigation.routeName[AppPage.Manager]!);
   }
 
   @override
   Future<void> navigateToSettingsPage(BuildContext context) async {
-    if (current == AppPage.Settings) {
+    if (_current == AppPage.Settings) {
       return null;
     }
-    previous = current;
-    current = AppPage.Settings;
+    _previous = _current;
+    _current = AppPage.Settings;
     await Navigator.pushNamed(
         context, AppNavigation.routeName[AppPage.Settings]!);
   }
 
   @override
   Future<void> navigateToLandingPage(BuildContext context) async {
-    if (current == AppPage.Landing) {
+    if (_current == AppPage.Landing) {
       return null;
     }
-    previous = current;
-    current = AppPage.Landing;
-    if (previous == AppPage.Landing) {
+    _previous = _current;
+    _current = AppPage.Landing;
+    if (_previous == AppPage.Landing) {
       Navigator.pop(context);
     } else {
       Navigator.pushNamed(context, AppNavigation.routeName[AppPage.Landing]!);

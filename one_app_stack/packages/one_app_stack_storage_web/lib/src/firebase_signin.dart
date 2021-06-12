@@ -28,13 +28,15 @@ class FirebaseSignin extends FirebaseSigninApi {
   }
 
   @override
-  Future<void> signIn(BuildContext context, {String? appName}) async {
+  Future<bool> signIn(BuildContext context,
+      {String? appName, String? email, String? password}) async {
     var currentUser = currentUserEmail();
     if (currentUser == null && appName == null) {
       try {
-        await _signInWithGoogle(context);
+        return await _signInWithGoogle(context);
       } catch (error) {
         print(error);
+        return false;
       }
     } else if (appName != null) {
       App? app;
@@ -44,23 +46,37 @@ class FirebaseSignin extends FirebaseSigninApi {
       final isSignedIn = app?.auth().currentUser != null;
       try {
         if (!isSignedIn) {
-          await _signInWithGoogle(context, appName: appName);
+          return await _signInWithGoogle(context, appName: appName);
         }
       } catch (error) {
         print(error);
+        return false;
       }
+    }
+    return false;
+  }
+
+  @override
+  bool isSignedIn(String appName) {
+    try {
+      final otherApp = apps.firstWhere((element) => element.name == appName);
+      return auth(otherApp).currentUser != null;
+    } catch (error) {
+      return false;
     }
   }
 
-  Future<void> _signInWithGoogle(BuildContext context,
+  Future<bool> _signInWithGoogle(BuildContext context,
       {String? appName}) async {
     try {
       final otherApp = (appName != null)
           ? apps.firstWhere((element) => element.name == appName)
           : null;
       await auth(otherApp).signInWithPopup(GoogleAuthProvider());
+      return true;
     } catch (error) {
       print(error);
+      return false;
     }
   }
 

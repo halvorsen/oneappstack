@@ -4,6 +4,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:one_app_stack/common_widget/popover/textfield_popover_widget.dart';
+import '../../common_widget/popover/popover_notifications.dart';
 import 'package:one_app_stack_storage_api/one_app_stack_storage_api.dart';
 import '../../common_widget/rounded_button.dart';
 import '../../manager_page/bloc/manager_bloc.dart';
@@ -34,8 +36,64 @@ class _ManagerPageWidgetState extends State<ManagerPageWidget> {
   @override
   void initState() {
     widget.pageController.setState = this.setState;
-    widget.services.auth.signIn(context, appName: currentFirebaseProjectId());
+    final isSignedIn =
+        widget.services.auth.isSignedIn(currentFirebaseProjectId());
+    if (!isSignedIn) {
+      if (widget.services.platform.isWeb) {
+        widget.services.auth
+            .signIn(context, appName: currentFirebaseProjectId());
+      } else {
+        Future.delayed(Duration(seconds: 1)).then((_) {
+          showTextFieldPopoverWidget(
+              context, '${currentFirebaseProjectId()} email:', '', [], (email) {
+            _login(email);
+          }, true);
+        });
+      }
+    }
     super.initState();
+  }
+
+  void _login(String email) {
+    Future.delayed(Duration(seconds: 1)).then((_) {
+      showTextFieldPopoverWidget(context, 'password:', '', [],
+          (password) async {
+        final success = await widget.services.auth.signIn(context,
+            appName: currentFirebaseProjectId(),
+            email: email,
+            password: password);
+
+        if (!success) {
+          snackBar(
+              content: 'Signin failed.', context: context, warningColor: true);
+          widget.services.appNavigation.navigateToProjectsPage(context);
+        } else {
+          snackBar(
+              content: 'Signin Success.',
+              context: context,
+              warningColor: false);
+          widget.services.appNavigation.navigateToProjectsPage(context);
+        }
+      }, true);
+    });
+  }
+
+  void showTextFieldPopoverWidget(
+      BuildContext context,
+      String title,
+      String initialText,
+      List<String> invalidStrings,
+      void Function(String value)? onValidTextChange,
+      bool requireSubmission) {
+    ShowPopOverNotification(context, LayerLink(),
+            popChild: Container(
+                width: 500,
+                height: 280,
+                child: TextFieldPopoverWidget(title, null, initialText,
+                    invalidStrings, onValidTextChange, requireSubmission,
+                    requireValidation: false)),
+            dismissOnBarrierClick: true)
+        .dispatch(context);
   }
 
   @override
