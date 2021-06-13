@@ -91,7 +91,7 @@ class FirebaseSignin extends FirebaseSigninApi {
         return false;
       }
     }
-    return false;
+    return true;
   }
 
   @override
