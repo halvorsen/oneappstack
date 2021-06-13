@@ -23,8 +23,6 @@ class ProjectConfigHelper {
       parsingString = parsingString.replaceAll('\n', '');
       parsingString = parsingString.replaceFirst('apiKey', '"apiKey"');
       parsingString = parsingString.replaceFirst('authDomain', '"authDomain"');
-      parsingString =
-          parsingString.replaceFirst('databaseURL', '"databaseURL"');
       parsingString = parsingString.replaceFirst('projectId', '"projectId"');
       parsingString =
           parsingString.replaceFirst('storageBucket', '"storageBucket"');
@@ -36,9 +34,10 @@ class ProjectConfigHelper {
       try {
         Map<String, dynamic> configMap = jsonDecode(parsingString);
         configMap['name'] = appName;
+        String id = configMap['projectId'] ?? '';
+        configMap['databaseURL'] = 'https://$id.firebaseio.com';
         if (configMap['apiKey'] != null &&
             configMap['authDomain'] != null &&
-            configMap['databaseURL'] != null &&
             configMap['projectId'] != null &&
             configMap['storageBucket'] != null &&
             configMap['messagingSenderId'] != null &&
