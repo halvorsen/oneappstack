@@ -421,7 +421,8 @@ class _SettingsRowWidgetState extends State<SettingsRowWidget>
                   Expanded(child: Container())
                 ],
               ),
-              Column(
+              Flexible(
+                  child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -496,7 +497,7 @@ class _SettingsRowWidgetState extends State<SettingsRowWidget>
                                 softWrap: true,
                               )))),
                 ],
-              )
+              ))
             ],
           )),
     );

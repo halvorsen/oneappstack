@@ -20,7 +20,7 @@ class ProjectCellWidget extends StatelessWidget {
 
   Widget _textWidget(
       String title, String id, TextStyle titleStyle, BuildContext context) {
-    final padding = varyForScreenWidth(20.0, 20.0, 10.0, 10.0, context);
+    final padding = varyForScreenWidth(20.0, 10.0, 5.0, 5.0, context);
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: padding, vertical: padding),
         child: Container(

@@ -2,12 +2,21 @@
 // Use of this source code is governed by the 3-clause BSD License that can be
 // found in the LICENSE file.
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart';
 import 'package:one_app_stack_storage_api/one_app_stack_storage_api.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:googleapis_auth/auth_io.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
+import '../one_app_stack_storage.dart';
 
 class FirebaseSignin extends FirebaseSigninApi {
   @override
@@ -115,6 +124,10 @@ class FirebaseSignin extends FirebaseSigninApi {
         }
       } else {
         if (FirebaseAuth.instance.currentUser == null) {
+          if (!Platform.isAndroid || !Platform.isIOS) {
+            final success = await signInDesktop(context);
+            return success;
+          }
           final googleSignInAccount = await GoogleSignIn().signIn();
           if (googleSignInAccount != null) {
             final googleSignInAuthentication =
@@ -152,6 +165,31 @@ class FirebaseSignin extends FirebaseSigninApi {
       print(error);
     }
     return false;
+  }
+
+  Future<bool> signInDesktop(BuildContext context) async {
+    final info = ci;
+    final id = ClientId(
+        info['one']! +
+            info['two']! +
+            info['three']! +
+            info['four']! +
+            info['eight']!,
+        info['five']! + info['six']! + info['seven']!);
+    final scopes = ['email'];
+    final client = Client();
+    final credentials = await obtainAccessCredentialsViaUserConsent(
+        id, scopes, client, (String url) => launch(url));
+    client.close();
+    final oauth = GoogleAuthProvider.credential(
+        idToken: credentials.idToken,
+        accessToken: credentials.accessToken.data);
+    try {
+      await FirebaseAuth.instance.signInWithCredential(oauth);
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   @override

@@ -17,6 +17,9 @@ dependencies:
   firebase_storage: ^8.0.6
   firebase_analytics: ^8.1.0
   cloud_functions: ^1.1.0
+  googleapis_auth: ^1.1.0
   uuid: ^3.0.4
+  http: ^0.13.3
+  url_launcher: ^6.0.3
   one_app_stack_storage_api:
     path: ../one_app_stack_storage_api
