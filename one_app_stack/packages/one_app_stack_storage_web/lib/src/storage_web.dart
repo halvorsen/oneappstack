@@ -303,7 +303,6 @@ class AppStorage implements AbstractAppStorage {
 
   @override
   void setOtherApp(Map<String, dynamic> config) {
-    print('set other app!');
     otherAppHelper = FirebaseOtherAppHelper(
         apiKey: config['apiKey'],
         authDomain: config['authDomain'],

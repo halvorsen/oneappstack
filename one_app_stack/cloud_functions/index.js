@@ -18,7 +18,6 @@ exports.saveProjectAuth = functions.https.onCall((data, context) => {
   if (!context.auth) {
     return {message: 'Auth Required', code: 401}
   } else {
-    context.auth.
     saveProjectAuth.main(data, context.auth.uid, admin)
     return {message: 'Success', code: 400}
   }
