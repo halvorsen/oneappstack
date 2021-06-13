@@ -163,7 +163,9 @@ class _DocumentFormState extends State<DocumentForm> {
 
   bool _isThumbnail(String filename) {
     final extensionName = filename.split('.').last;
-    if (extensionName == 'png' || extensionName == 'jpg') {
+    if (extensionName == 'png' ||
+        extensionName == 'jpg' ||
+        extensionName == 'jpeg') {
       return true;
     } else {
       return false;
