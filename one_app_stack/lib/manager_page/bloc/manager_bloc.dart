@@ -220,7 +220,7 @@ class ManagerState {
         }
       }
       if (!isSchemaId) {
-        list.add(element.id);
+        list.add(element.name);
       }
     }
     return list;
@@ -240,7 +240,7 @@ class ManagerState {
       }
       if (!isSchemaId) {
         isDocument = true;
-        list.add(element.id);
+        list.add(element.name);
       }
     }
     if (isDocument) {

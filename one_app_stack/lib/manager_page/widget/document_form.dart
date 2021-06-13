@@ -495,8 +495,10 @@ class _DocumentFormState extends State<DocumentForm> {
       if (mutableSelectedDocument[i].id == id) {
         if (index == -1) {
           mutableSelectedDocument[i].value = value;
-          widget.delegate.replaceLastPathElement(
-              NavigationElement(value, value, false, true));
+          if (id == docName) {
+            widget.delegate.replaceLastPathElement(
+                NavigationElement(value, value, false, true));
+          }
         } else {
           var list = <dynamic>[];
           if (mutableSelectedDocument[i].value != null) {

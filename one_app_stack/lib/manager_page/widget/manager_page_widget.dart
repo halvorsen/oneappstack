@@ -146,8 +146,6 @@ class _ManagerPageWidgetState extends State<ManagerPageWidget> {
                                 return (key == docLastEditedId ||
                                     key == docCreationId);
                               });
-                              // print(documentInstance);
-                              print(documentDefinition?.toJsonString());
                               instanceSummaries?.add(InstanceSummary(
                                   documentInstance[docId],
                                   DocumentProperty.assembleDocument(
