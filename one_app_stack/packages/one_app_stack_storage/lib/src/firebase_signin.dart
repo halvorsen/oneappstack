@@ -2,7 +2,6 @@
 // Use of this source code is governed by the 3-clause BSD License that can be
 // found in the LICENSE file.
 
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,7 +13,6 @@ import 'package:one_app_stack_storage_api/one_app_stack_storage_api.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 import '../one_app_stack_storage.dart';
 
